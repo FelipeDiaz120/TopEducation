@@ -50,8 +50,17 @@ public class PagoService {
     }
     public void registrarPago(Long id){
         PagoEntity pago = obtenerPagoPorId(id);
-        pago.setEstado("Pagado");
+        ArrayList<PagoEntity> pagos = obtenerPorRut(pago.getRutDuenoPago());
         pago.setFechaPago(LocalDate.now());
+        int montoConInteres = interesAtraso(pago);
+        for (int i = 0; i < pagos.size(); i++) {
+            PagoEntity pagoPendiente = pagos.get(i);
+            if (!pago.getId().equals(pagoPendiente.getId()) && pagoPendiente.getEstado().equals("Pendiente")){
+                pagoPendiente.setMonto(montoConInteres);
+                guardarPago(pagoPendiente);
+            }
+        }
+        pago.setEstado("Pagado");
         guardarPago(pago);
     }
     public void generarPagos(Long id, String tipoPago) {
@@ -181,6 +190,37 @@ public class PagoService {
         LocalDate fechaPago = pago.getFechaPago();
         int diferenciaEnMeses = (int) ChronoUnit.MONTHS.between(fechaEmision, fechaPago);
         return diferenciaEnMeses;
+    }
+
+    public int interesAtraso(PagoEntity pago){
+        int mesesAtraso= mesesDiferencia(pago);
+        int interes= 0;
+
+        if (mesesAtraso < 0){
+            ;
+        }
+
+        if (mesesAtraso == 0){
+            interes= (pago.getMonto());
+            return interes;
+        }
+        if (mesesAtraso == 1){
+            interes= (int) (pago.getMonto() + pago.getMonto() * 0.03);
+            return interes;
+        }
+        if (mesesAtraso == 2){
+            interes= (int) (pago.getMonto() +pago.getMonto() * 0.06);
+            return interes;
+        }
+        if (mesesAtraso == 3){
+            interes= (int) (pago.getMonto() +pago.getMonto() * 0.09);
+            return interes;
+        }
+        if (mesesAtraso > 3){
+            interes= (int) (pago.getMonto() +pago.getMonto() * 0.15);
+            return interes;
+        }
+        return interes;
     }
 
 }
