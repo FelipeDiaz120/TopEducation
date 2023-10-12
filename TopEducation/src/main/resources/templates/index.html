@@ -41,6 +41,7 @@
     					<a  th:href="@{/eliminar/}+${usuario.id}" class="btn btn-danger" role="button">Eliminar</a>
 						<a  th:href="@{'/generarPagos/' + ${usuario.id} + '/' + Cuotas}" class="btn btn-primary" role="button">Pago en Cuotas</a>
 						<a  th:href="@{'/generarPagos/' + ${usuario.id} + '/' + Contado}" class="btn btn-primary" role="button">Pago al Contado</a>
+						<a  th:href="@{'/puntaje'}" class="btn btn-primary" role="button">Puntaje</a>
 						<a  th:href="@{'/listarPagosRut/' + ${usuario.rut}}" class="btn btn-primary" role="button">Ver Pagos</a>
 					</td>
     			</tr>

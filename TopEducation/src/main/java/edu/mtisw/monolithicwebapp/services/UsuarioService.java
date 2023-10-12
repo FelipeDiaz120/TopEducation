@@ -1,5 +1,4 @@
 package edu.mtisw.monolithicwebapp.services;
-
 import edu.mtisw.monolithicwebapp.entities.UsuarioEntity;
 import edu.mtisw.monolithicwebapp.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,13 @@ import java.util.Optional;
 public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    PagoService pagoService;
     
     public ArrayList<UsuarioEntity> obtenerUsuarios(){
         return (ArrayList<UsuarioEntity>) usuarioRepository.findAll();
     }
-
+    public UsuarioEntity obtenerPorRut(String rut) { return usuarioRepository.findByRut(rut);}
 
     public UsuarioEntity guardarUsuario(UsuarioEntity usuario){
 

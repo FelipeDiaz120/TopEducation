@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<UsuarioEntity, Long> {
-    //public UsuarioEntity findByEmail(String email);
+    public UsuarioEntity findByRut(String rut);
    // @Query(value = "SELECT * FROM usuarios WHERE usuarios.email = :email", nativeQuery = true)
     //UsuarioEntity findByEmailNativeQuery(@Param("email") String email);
 

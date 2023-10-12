@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 
 import java.time.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "usuarios")
@@ -26,9 +27,10 @@ public class UsuarioEntity {
     private String nombres;
     private String apellidos;
     private String nombreColegio;
-
+    private ArrayList<Integer> puntajes;
     //Municipal-Subvencionado-Privado
     private String tipoColegio;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
