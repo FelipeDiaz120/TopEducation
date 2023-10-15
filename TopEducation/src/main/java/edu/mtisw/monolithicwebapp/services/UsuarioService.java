@@ -14,7 +14,7 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    PagoService pagoService;
+
     
     public ArrayList<UsuarioEntity> obtenerUsuarios(){
         return (ArrayList<UsuarioEntity>) usuarioRepository.findAll();
@@ -39,6 +39,16 @@ public class UsuarioService {
         }catch(Exception err){
             return false;
         }
+    }
+    public int calcularPromedioPuntaje(UsuarioEntity usuario){
+        ArrayList<Integer> puntajes = usuario.getPuntajes();
+        int sumatoria=0;
+        for (int i=0; i<puntajes.size();i++){
+            sumatoria= sumatoria + puntajes.get(i);
+        }
+        usuario.setPromedio(sumatoria/puntajes.size());
+        guardarUsuario(usuario);
+        return sumatoria/puntajes.size();
     }
 
 

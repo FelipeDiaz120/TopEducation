@@ -24,6 +24,7 @@
 					<th>Tipo de Colegio</th>
 					<th>Fecha de Nacimiento</th>
 					<th>Fecha de Egreso</th>
+
     			</tr>
     		</thead>
     		<tbody>
@@ -36,12 +37,14 @@
 					<td th:text="${usuario.tipoColegio}"></td>
 					<td th:text="${usuario.fechaNacimiento}"></td>
 					<td th:text="${usuario.fechaEgreso}"></td>
+					<td th:if="${usuario.getPuntajes() != null }">
+					<a  th:href="@{'/resumen/' + ${usuario.rut}}" class="btn btn-primary" role="button">Resumen</a>
+				</td>
     				<td>
     					<a  th:href="@{/editar/}+${usuario.id}" class="btn btn-primary" role="button">Editar</a>
     					<a  th:href="@{/eliminar/}+${usuario.id}" class="btn btn-danger" role="button">Eliminar</a>
 						<a  th:href="@{'/generarPagos/' + ${usuario.id} + '/' + Cuotas}" class="btn btn-primary" role="button">Pago en Cuotas</a>
 						<a  th:href="@{'/generarPagos/' + ${usuario.id} + '/' + Contado}" class="btn btn-primary" role="button">Pago al Contado</a>
-						<a  th:href="@{'/puntaje'}" class="btn btn-primary" role="button">Puntaje</a>
 						<a  th:href="@{'/listarPagosRut/' + ${usuario.rut}}" class="btn btn-primary" role="button">Ver Pagos</a>
 					</td>
     			</tr>

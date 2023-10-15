@@ -1,6 +1,8 @@
 package edu.mtisw.monolithicwebapp.controllers;
 
+import edu.mtisw.monolithicwebapp.entities.PagoEntity;
 import edu.mtisw.monolithicwebapp.entities.UsuarioEntity;
+import edu.mtisw.monolithicwebapp.services.PagoService;
 import edu.mtisw.monolithicwebapp.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -20,11 +23,14 @@ public class UsuarioController {
 	UsuarioService usuarioService;
 
     @GetMapping("/listar")
-	public String listar(Model model) {
+	public String listar(Model model ) {
     	ArrayList<UsuarioEntity>usuarios=usuarioService.obtenerUsuarios();
+
     	model.addAttribute("usuarios",usuarios);
+
 		return "index";
 	}
+
 	@GetMapping("/new")
 	public String agregar(Model model) {
 		model.addAttribute("usuario",new UsuarioEntity());

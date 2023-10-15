@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>My Web App</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-sm">
+
+		<a th:href ="@{/listar}" class ="btn btn-primary"> Volver</a>
+		<br> <br>
+    	<table class="table">
+    		<thead class="thead-dark">
+    			<tr>
+					<th>RUT</th>
+					<th>Nombres</th>
+					<th>Pruebas rendidas</th>
+					<th>Promedio puntajes</th>
+					<th>Monto total a pagar</th>
+					<th>Tipo Pago</th>
+					<th>Cuotas pactadas</th>
+					<th>Cuotas Pagadas</th>
+					<th>Monto Pagado</th>
+					<th>Monto restante por pagar</th>
+					<th>Fecha del ultimo pago</th>
+					<th>Cuotas con retraso</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+				<tr>
+					<td th:text="${estudiante.rut}"></td>
+					<td th:text="${estudiante.nombres}"></td>
+					<td th:text="${estudiante.getPuntajes().size()}"></td>
+					<td th:text="${estudiante.promedio}"></td>
+					<td th:text="${montoTotal}"></td>
+					<td th:text="${pago.tipoPago}"></td>
+					<td th:text="${pago.totalCuotas}"></td>
+					<td th:text="${cuotasPagadas}"></td>
+					<td th:text="${totalCuotasPagadas}"></td>
+					<td th:text="${porPagar}"></td>
+					<td th:text="${fechaPago}"></td>
+					<td th:text="${atrasos}"></td>
+					</tr>
+
+
+
+    		</tbody>
+    	</table>
+
+    </div>
+</body>
+</html>

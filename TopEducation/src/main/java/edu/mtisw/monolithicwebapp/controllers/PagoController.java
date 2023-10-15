@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -32,6 +33,29 @@ public class PagoController {
         model.addAttribute("pagos",pagos);
         return "indexPago";
     }
+
+    @GetMapping("/resumen/{rut}")
+    public String resumen(Model modelEstudiante,Model modelMontoTotal,Model modelPago,Model modelCuotasPagadas,Model modelTotalCuotasPagadas,Model modelPorPagar,Model modelFecha,Model modelAtrasos,@PathVariable("rut") String rut) {
+
+        int montoTotal =pagoService.montoTotal(rut);
+        int cuotasPagadas = pagoService.calcularCuotasPagadas(rut);
+        int totalCuotasPagadas = pagoService.calcularTotalCuotasPagadas(rut);
+        int porPagar=montoTotal-totalCuotasPagadas;
+        int atrasos = pagoService.atrasos(rut);
+        LocalDate fechaPago= pagoService.ultimoPagoFecha(rut);
+        ArrayList<PagoEntity> pagos = pagoService.obtenerPorRut(rut);
+        UsuarioEntity estudiante = pagoService.obtenerDuenoPago(rut);
+        PagoEntity pago = pagos.get(0);
+        modelEstudiante.addAttribute("estudiante",estudiante);
+        modelPago.addAttribute("pago",pago);
+        modelTotalCuotasPagadas.addAttribute("totalCuotasPagadas", totalCuotasPagadas);
+        modelCuotasPagadas.addAttribute("cuotasPagadas", cuotasPagadas);
+        modelMontoTotal.addAttribute("montoTotal", montoTotal);
+        modelPorPagar.addAttribute("porPagar", porPagar);
+        modelFecha.addAttribute("fechaPago", fechaPago);
+        modelAtrasos.addAttribute("atrasos", atrasos);
+        return "indexResumen";}
+
     @GetMapping("/generarPagos/{id}/{tipoPago}")
     public String generar(@PathVariable("id") Long id,@PathVariable("tipoPago") String tipoPago ) {
 

@@ -5,6 +5,7 @@ import edu.mtisw.monolithicwebapp.entities.UsuarioEntity;
 import edu.mtisw.monolithicwebapp.services.UsuarioService;
 import edu.mtisw.monolithicwebapp.repositories.PagoRepository;
 
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class PagoService {
         int montoConInteres = interesAtraso(pago);
         for (int i = 0; i < pagos.size(); i++) {
             PagoEntity pagoPendiente = pagos.get(i);
-            if (!pago.getId().equals(pagoPendiente.getId()) && pagoPendiente.getEstado().equals("Pendiente")){
+            if (pagoPendiente.getEstado().equals("Pendiente")){
                 pagoPendiente.setMonto(montoConInteres);
                 guardarPago(pagoPendiente);
             }
@@ -63,6 +64,75 @@ public class PagoService {
         pago.setEstado("Pagado");
         guardarPago(pago);
     }
+    @Generated
+    public int montoTotal(String rut){
+        int total = 0;
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+        for (int i = 0; i < pagos.size(); i++) {
+            total = total + pagos.get(i).getMonto();
+        }
+        return total;
+    }
+    public int calcularCuotasPagadas(String rut){
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+        int cuotasPagadas=0;
+        for (int i = 0; i < pagos.size(); i++) {
+           if (pagos.get(i).getEstado().equals("Pagado")){
+               cuotasPagadas++;
+           }
+        }
+        return cuotasPagadas;
+    }
+    public int calcularTotalCuotasPagadas(String rut){
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+        int total=0;
+        for (int i = 0; i < pagos.size(); i++) {
+            if (pagos.get(i).getEstado().equals("Pagado")){
+                total= total + pagos.get(i).getMonto();
+            }
+        }
+        return total;
+    }
+    public LocalDate ultimoPagoFecha(String rut){
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+        LocalDate fecha = null;
+        int mes = 0;
+        for (PagoEntity pago : pagos) {
+            if (pago.getEstado().equals("Pagado") && pago.getFechaPago().getMonthValue() > mes) {
+                mes = pago.getFechaPago().getMonthValue();
+                fecha=pago.getFechaPago();
+            }
+        }
+        return fecha;
+    }
+    public int atrasos(String rut){
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+        LocalDate fechaActual = LocalDate.now();
+        int atrasos = 0;
+        for (PagoEntity pago : pagos) {
+            if (pago.getEstado().equals("Pagado") && pago.getFechaEmision().isBefore(pago.getFechaPago())) {
+            atrasos++;
+            }
+        }
+        return atrasos;
+    }
+    public UsuarioEntity obtenerDuenoPago(String rut){
+        return usuarioService.obtenerPorRut(rut);
+    }
+    @Generated
+    public void registrarDescuentoPromedio(String rut){
+        ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
+
+        for (int i = 0; i < pagos.size(); i++) {
+            int montoConDescuento = descuentoPromedio(pagos.get(i));
+            PagoEntity pagoPendiente = pagos.get(i);
+            if (pagoPendiente.getEstado().equals("Pendiente")){
+                pagoPendiente.setMonto(montoConDescuento);
+                guardarPago(pagoPendiente);
+            }
+        }
+    }
+    @Generated
     public void generarPagos(Long id, String tipoPago) {
        UsuarioEntity usuario = usuarioService.obtenerEstudiantePorId(id);
        LocalDate fechaEmisionCuotas = LocalDate.of(2023,3,10);
@@ -196,10 +266,6 @@ public class PagoService {
         int mesesAtraso= mesesDiferencia(pago);
         int interes= 0;
 
-        if (mesesAtraso < 0){
-            ;
-        }
-
         if (mesesAtraso == 0){
             interes= (pago.getMonto());
             return interes;
@@ -209,7 +275,7 @@ public class PagoService {
             return interes;
         }
         if (mesesAtraso == 2){
-            interes= (int) (pago.getMonto() +pago.getMonto() * 0.06);
+            interes= (int) (pago.getMonto() + pago.getMonto() * 0.06);
             return interes;
         }
         if (mesesAtraso == 3){
@@ -222,7 +288,30 @@ public class PagoService {
         }
         return interes;
     }
-
+    public int descuentoPromedio(PagoEntity pago) {
+        UsuarioEntity usuario = usuarioService.obtenerPorRut(pago.getRutDuenoPago());
+        int promedio = usuario.getPromedio();
+        int descuento = 0;
+        if (950 <= promedio && promedio <= 1000) {
+            descuento = (int) (pago.getMonto() - pago.getMonto() * 0.10);
+            return descuento;
+        }
+        if (900 <= promedio && promedio <= 949) {
+            descuento = (int) (pago.getMonto() - pago.getMonto() * 0.05);
+            return descuento;
+        }
+        if (850 <= promedio && promedio <= 899) {
+            descuento = (int) (pago.getMonto() - pago.getMonto() * 0.02);
+            return descuento;
+        }
+        if (promedio < 850){
+            descuento= pago.getMonto();
+            return  descuento;
+        }
+        return descuento;
+    }
 }
+
+
 
 

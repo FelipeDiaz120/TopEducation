@@ -28,6 +28,7 @@ public class UsuarioEntity {
     private String apellidos;
     private String nombreColegio;
     private ArrayList<Integer> puntajes;
+    private Integer promedio;
     //Municipal-Subvencionado-Privado
     private String tipoColegio;
 

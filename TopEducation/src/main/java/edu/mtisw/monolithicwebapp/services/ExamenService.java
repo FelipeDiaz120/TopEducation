@@ -25,6 +25,8 @@ public class ExamenService {
     ExamenRepository examenRepository;
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    PagoService pagoService;
     private final Logger logg = LoggerFactory.getLogger(ExamenService.class);
     public ArrayList<ExamenEntity> obtenerExamenesPorRut(String Rut) {
         return examenRepository.findAllByRutEstudiante(Rut);
@@ -59,10 +61,13 @@ public class ExamenService {
                 usuario.setPuntajes(listaPuntajes);
                 usuarioService.guardarUsuario(usuario);
                 for (int j = 0; j < usuario.getPuntajes().size(); j++) {
-                    System.out.println(usuario.getPuntajes().get(j));
+                    //System.out.println(usuario.getPuntajes().get(j));
                 }
-
             }
+            usuarioService.calcularPromedioPuntaje(usuario);
+            pagoService.registrarDescuentoPromedio(usuario.getRut());
+            System.out.println("PROMEDIO:");
+            System.out.println(usuario.getPromedio());
         }
 
     }
