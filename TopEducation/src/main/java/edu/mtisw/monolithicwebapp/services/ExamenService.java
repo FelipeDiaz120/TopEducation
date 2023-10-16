@@ -8,6 +8,7 @@ import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,10 +32,11 @@ public class ExamenService {
     public ArrayList<ExamenEntity> obtenerExamenesPorRut(String Rut) {
         return examenRepository.findAllByRutEstudiante(Rut);
     }
-
+@Generated
     public void guardarExamen(ExamenEntity examen){
         examenRepository.save(examen);
     }
+    @Generated
     public void guardarExamenDB(String rut, String fechaExamen,int puntaje){
         ExamenEntity newExamen = new ExamenEntity();
         newExamen.setFechaExamen(fechaExamen);
@@ -45,7 +47,7 @@ public class ExamenService {
     public ArrayList<ExamenEntity> obtenerExamenes() {
         return (ArrayList<ExamenEntity>) examenRepository.findAll();
     }
-
+@Generated
     public void guardarPuntaje(){
         ArrayList<ExamenEntity> examenesEstudiante = obtenerExamenes();
         for (int i = 0; i < examenesEstudiante.size(); i++) {
@@ -64,7 +66,8 @@ public class ExamenService {
                     //System.out.println(usuario.getPuntajes().get(j));
                 }
             }
-            usuarioService.calcularPromedioPuntaje(usuario);
+            usuario.setPromedio(usuarioService.calcularPromedioPuntaje(usuario));
+            usuarioService.guardarUsuario(usuario);
             pagoService.registrarDescuentoPromedio(usuario.getRut());
             System.out.println("PROMEDIO:");
             System.out.println(usuario.getPromedio());

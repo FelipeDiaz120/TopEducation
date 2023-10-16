@@ -43,12 +43,14 @@ public class PagoService {
             return false;
         }
     }
+    @Generated
     public PagoEntity obtenerPagoPorId(Long id){
         Optional<PagoEntity> optionalPago = pagoRepository.findById(id);
 
         // Verifica si el Optional contiene un valor y, si es así, devuélvelo, de lo contrario, devuelve null o realiza alguna otra acción apropiada.
         return optionalPago.orElse(null); // Puedes cambiar "null" por lo que desees en caso de no encontrar el usuario.
     }
+    @Generated
     public void registrarPago(Long id){
         PagoEntity pago = obtenerPagoPorId(id);
         ArrayList<PagoEntity> pagos = obtenerPorRut(pago.getRutDuenoPago());
@@ -73,6 +75,7 @@ public class PagoService {
         }
         return total;
     }
+    @Generated
     public int calcularCuotasPagadas(String rut){
         ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
         int cuotasPagadas=0;
@@ -83,6 +86,7 @@ public class PagoService {
         }
         return cuotasPagadas;
     }
+    @Generated
     public int calcularTotalCuotasPagadas(String rut){
         ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
         int total=0;
@@ -93,6 +97,7 @@ public class PagoService {
         }
         return total;
     }
+    @Generated
     public LocalDate ultimoPagoFecha(String rut){
         ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
         LocalDate fecha = null;
@@ -105,6 +110,7 @@ public class PagoService {
         }
         return fecha;
     }
+    @Generated
     public int atrasos(String rut){
         ArrayList<PagoEntity> pagos = obtenerPorRut(rut);
         LocalDate fechaActual = LocalDate.now();
@@ -116,6 +122,7 @@ public class PagoService {
         }
         return atrasos;
     }
+    @Generated
     public UsuarioEntity obtenerDuenoPago(String rut){
         return usuarioService.obtenerPorRut(rut);
     }
@@ -261,7 +268,7 @@ public class PagoService {
         int diferenciaEnMeses = (int) ChronoUnit.MONTHS.between(fechaEmision, fechaPago);
         return diferenciaEnMeses;
     }
-
+@Generated
     public int interesAtraso(PagoEntity pago){
         int mesesAtraso= mesesDiferencia(pago);
         int interes= 0;

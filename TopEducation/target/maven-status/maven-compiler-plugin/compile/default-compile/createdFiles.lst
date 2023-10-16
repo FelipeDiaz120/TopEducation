@@ -1,0 +1,13 @@
+edu\mtisw\monolithicwebapp\services\ExamenService.class
+edu\mtisw\monolithicwebapp\services\UsuarioService.class
+edu\mtisw\monolithicwebapp\MonolithicWebappApplication.class
+edu\mtisw\monolithicwebapp\entities\ExamenEntity.class
+edu\mtisw\monolithicwebapp\entities\PagoEntity.class
+edu\mtisw\monolithicwebapp\controllers\PagoController.class
+edu\mtisw\monolithicwebapp\controllers\UsuarioController.class
+edu\mtisw\monolithicwebapp\entities\UsuarioEntity.class
+edu\mtisw\monolithicwebapp\repositories\PagoRepository.class
+edu\mtisw\monolithicwebapp\repositories\ExamenRepository.class
+edu\mtisw\monolithicwebapp\repositories\UsuarioRepository.class
+edu\mtisw\monolithicwebapp\services\PagoService.class
+edu\mtisw\monolithicwebapp\controllers\ExamenController.class

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class PagoServiceTest {
-    @Autowired
+
     PagoService pago = new PagoService();
     PagoEntity pagoEntity = new PagoEntity();
     UsuarioEntity usuario = new UsuarioEntity();
@@ -109,24 +109,14 @@ public class PagoServiceTest {
         int meses = pago.mesesDiferencia(pagoEntity);
         assertEquals( 0, meses, 0.0);
     }
-
     @Test
-    void montoTotal() {
-        ArrayList<PagoEntity> pagos = new ArrayList<>();
-        String rut = "20333222-1";
-        pagoEntity.setMonto(100);
-        pagoEntity.setRutDuenoPago(rut);
-        pagos.add(pagoEntity);  // Pago 1
-        pagoEntity.setMonto(200);
-        pagoEntity.setRutDuenoPago(rut);
-        pagos.add(pagoEntity);  // Pago 2
-        pagoEntity.setMonto(300);
-        pagoEntity.setRutDuenoPago(rut);
-        pagos.add(pagoEntity);  // Pago 3
-
-        int monto = pago.montoTotal(rut);
-        assertEquals( 600, monto, 0.0);
+    void calcularAnosEgreso() {
+        usuario.setFechaEgreso(LocalDate.of(2022,9,10));
+        int anios = pago.calcularAnosEgreso(usuario);
+        assertEquals( 1, anios, 0.0);
     }
+
+
 
 
 

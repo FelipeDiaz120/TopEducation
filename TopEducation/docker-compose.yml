@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgres-db:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: felipe
+      POSTGRES_DB: bdtemp
+    ports:
+      - "5432:5432"
+  app:
+    container_name: topeducation
+    image: felipediaz1/topeducation:latest
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/bdtemp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=felipe
+    deploy:
+      restart_policy:
+        condition: none
+    depends_on:
+      - postgres-db

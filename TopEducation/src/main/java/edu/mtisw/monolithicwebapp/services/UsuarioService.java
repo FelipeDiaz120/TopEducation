@@ -47,7 +47,7 @@ public class UsuarioService {
             sumatoria= sumatoria + puntajes.get(i);
         }
         usuario.setPromedio(sumatoria/puntajes.size());
-        guardarUsuario(usuario);
+        //guardarUsuario(usuario);
         return sumatoria/puntajes.size();
     }
 
