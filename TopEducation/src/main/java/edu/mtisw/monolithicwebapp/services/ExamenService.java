@@ -1,14 +1,14 @@
 package edu.mtisw.monolithicwebapp.services;
 
 import edu.mtisw.monolithicwebapp.entities.ExamenEntity;
-import edu.mtisw.monolithicwebapp.entities.PagoEntity;
+
 import edu.mtisw.monolithicwebapp.entities.UsuarioEntity;
 import edu.mtisw.monolithicwebapp.repositories.ExamenRepository;
 import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +29,7 @@ public class ExamenService {
     @Autowired
     PagoService pagoService;
     private final Logger logg = LoggerFactory.getLogger(ExamenService.class);
+    @Generated
     public ArrayList<ExamenEntity> obtenerExamenesPorRut(String Rut) {
         return examenRepository.findAllByRutEstudiante(Rut);
     }

@@ -1,6 +1,7 @@
 package edu.mtisw.monolithicwebapp.services;
 import edu.mtisw.monolithicwebapp.entities.UsuarioEntity;
 import edu.mtisw.monolithicwebapp.repositories.UsuarioRepository;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +16,25 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
 
-    
+   @Generated
     public ArrayList<UsuarioEntity> obtenerUsuarios(){
         return (ArrayList<UsuarioEntity>) usuarioRepository.findAll();
     }
+   @Generated
     public UsuarioEntity obtenerPorRut(String rut) { return usuarioRepository.findByRut(rut);}
-
+@Generated
     public UsuarioEntity guardarUsuario(UsuarioEntity usuario){
 
         return usuarioRepository.save(usuario);
     }
-
+@Generated
     public UsuarioEntity obtenerEstudiantePorId(Long id){
         Optional<UsuarioEntity> optionalUsuario = usuarioRepository.findById(id);
 
         // Verifica si el Optional contiene un valor y, si es así, devuélvelo, de lo contrario, devuelve null o realiza alguna otra acción apropiada.
         return optionalUsuario.orElse(null); // Puedes cambiar "null" por lo que desees en caso de no encontrar el usuario.
     }
+    @Generated
     public boolean eliminarUsuario(Long id) {
         try{
             usuarioRepository.deleteById(id);
