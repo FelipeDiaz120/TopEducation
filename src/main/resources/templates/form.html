@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>My Web App</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-4">
+		<a th:href ="@{/listar}" class ="btn btn-primary"> Volver</a>
+    	<div class="col-sm-6">
+    		<form th:action="@{/save}" th:object=${usuario} method="POST">
+				<div class="card">
+					<div class=" card-header">
+					<h3>Modulo Estudiante</h3>
+					</div>
+					<div class="card-body">
+						<div class="visually-hidden">
+							<label>Id </label>
+							 <input th:field= "*{id}" type= "text" class="form-control" readonly="readonly" />
+						</div>
+						<div class="form-group">
+							<label>Nombre</label>
+							<input th:field= "*{nombres}" type= "text" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label>Apellidos</label>
+							<input th:field= "*{apellidos}" type= "text" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label>Rut</label>
+							<input th:field="*{rut}" type="text" class="form-control" pattern="\d{7,8}-[0-9kK]" title="Por favor, ingrese un Rut válido (12345678-k o un número)" required />
+						</div>
+
+						<div class="form-group">
+							<label>Nombre del Colegio</label>
+							<input th:field= "*{nombreColegio}" type= "text" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label>Tipo de Colegio</label>
+							<select th:field="*{tipoColegio}" class="form-control">
+								<option value="Municipal">Municipal</option>
+								<option value="Subvencionado">Subvencionado</option>
+								<option value="Privado">Privado</option>
+								<!-- Agrega más opciones según sea necesario -->
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Fecha de Nacimiento</label>
+							<input th:field= "*{fechaNacimiento}" type= "date" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label>Fecha de Egreso</label>
+							<input th:field= "*{fechaEgreso}" type= "date" class="form-control" />
+						</div>
+					</div>
+					<div class="card-footer">
+					<input type="submit" value="Guardar" class="btn btn-success">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

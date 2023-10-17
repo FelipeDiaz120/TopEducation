@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>My Web App</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-sm">
+
+		<a th:href ="@{/listar}" class ="btn btn-primary"> Volver</a>
+		<br> <br>
+    	<table class="table">
+    		<thead class="thead-dark">
+    			<tr>
+	    			<th>ID</th>
+					<th>Rut Dueño Pago</th>
+	    			<th>Tipo Pago</th>
+	    			<th>Monto</th>
+					<th>Cuotas</th>
+					<th>Fecha Estimada de pago</th>
+					<th>Fecha del pago</th>
+					<th>Estado</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr th:each="pago:${pagos}">
+					<td th:text="${pago.id}"></td>
+    				<td th:text="${pago.rutDuenoPago}"></td>
+    				<td th:text="${pago.tipoPago}"></td>
+    				<td th:text="${pago.monto}"></td>
+					<td th:text="${pago.totalCuotas}"></td>
+					<td th:text="${pago.fechaEmision}"></td>
+					<td th:text="${pago.fechaPago}"></td>
+					<td th:text="${pago.estado}"></td>
+
+					<td th:if="${!pago.estado.equals('Pagado')}">
+						<a th:href="@{/registrarPago/}+${pago.id}" class="btn btn-danger" role="button">Registrar pago</a>
+					</td>
+					<td>
+						<a  th:href="@{/eliminarPago/}+${pago.id}" class="btn btn-danger" role="button">Eliminar</a>
+    				</td>
+    			</tr>
+
+    		</tbody>
+    	</table>
+    </div>
+</body>
+</html>
